@@ -9,7 +9,8 @@ public class Main {
     public static void main(String[] args) throws MalformedURLException, NotBoundException, RemoteException {
 
         IServices services = (IServices) Naming.lookup("rmi://127.0.0.1:1250/hamza");
-        for (int i = 0; i <20 ; i++) {
+
+        for (int i = 0; i <100 ; i++) {
             new Camera(i+1, services).start();
         }
     }

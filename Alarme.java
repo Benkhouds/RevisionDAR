@@ -20,5 +20,14 @@ public class Alarme extends UnicastRemoteObject implements IServices {
     @Override
     public void checkStatus(String s){
         System.out.println(s);
+
+        if((int) (Math.random() * 10)  == 4){
+            notifyPolice();
+        }
+
+    }
+
+    private void notifyPolice(){
+        Police.notifyMe();
     }
 }
