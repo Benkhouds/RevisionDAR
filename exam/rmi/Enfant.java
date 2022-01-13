@@ -1,20 +1,20 @@
-package rmi;
+
 
 import java.rmi.RemoteException;
 
-public class Agent  extends Thread{
+public class Enfant extends Thread{
 
     private InterfaceDistributeur distributeur;
 
-    public Agent(InterfaceDistributeur distributeur) {
+    public Enfant(InterfaceDistributeur distributeur) {
         this.distributeur = distributeur;
     }
 
     @Override
     public void run() {
         try {
-            distributeur.déposerJouet();
-        } catch (InterruptedException | RemoteException e) {
+            distributeur.retirerJouet();
+        } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
