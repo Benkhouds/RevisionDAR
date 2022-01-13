@@ -1,3 +1,5 @@
+package thread;
+
 public class Agent  extends Thread{
 
     private Distributeur distributeur;
@@ -9,7 +11,7 @@ public class Agent  extends Thread{
     @Override
     public void run() {
         try {
-            distributeur.déposerJouet(new Jouet());
+            distributeur.déposerJouet();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

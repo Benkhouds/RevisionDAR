@@ -1,11 +1,21 @@
+package rmi;
+
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Distributeur {
+public class Distributeur  extends UnicastRemoteObject implements InterfaceDistributeur {
     private List<Jouet> jouets = new ArrayList<>();
     private int capacité = 20;
 
-    public void déposerJouet(Jouet jouet) throws InterruptedException {
+    public Distributeur() throws RemoteException {
+    }
+
+    @Override
+    public void déposerJouet() throws InterruptedException, RemoteException {
         while (true){
             synchronized (this) {
                 // attend lorsque le distributeur est plein
@@ -14,7 +24,7 @@ public class Distributeur {
 
                 // ajoute un jouet
                 System.out.println(" agent ajoute jouet " + jouets.size());
-                jouets.add(jouet);
+                jouets.add(new Jouet());
 
                 // notifie les enfants
                 notify();
@@ -25,7 +35,7 @@ public class Distributeur {
         }
     }
 
-    public void retirerJouet() throws InterruptedException {
+    public void retirerJouet() throws InterruptedException, RemoteException {
         while (true){
             synchronized (this) {
 
@@ -44,5 +54,13 @@ public class Distributeur {
                 Thread.sleep(500);
             }
         }
+    }
+
+    public static void main(String[] args) throws RemoteException, MalformedURLException {
+        Distributeur distributeur = new Distributeur();
+
+        java.rmi.registry.LocateRegistry.createRegistry(1250);
+
+        Naming.rebind("rmi://127.0.0.1:1250/dist", distributeur);
     }
 }
